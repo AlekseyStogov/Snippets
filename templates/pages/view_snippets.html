@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 
 <!-- Begin page content -->
@@ -34,7 +35,7 @@
                         {% for snippet in snippets %}
                         <tr>
                             <td scope="row">{{snippet.id}}</td>
-                            <td><a href="...">{{snippet.name}}</a></td>
+                            <td><a href="{% url 'snippet-detail' snippet.id %}">{{snippet.name}}</a></td>
                             <td>{{snippet.creation_date}}</td>
                         </tr>
                         {% endfor %}
