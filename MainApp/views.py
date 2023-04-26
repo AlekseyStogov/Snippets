@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
+from MainApp.forms import SnippetForm
 
 
 def index_page(request):
@@ -9,8 +10,18 @@ def index_page(request):
 
 
 def add_snippet_page(request):
-    context = {'pagename': 'Добавление нового сниппета'}
-    return render(request, 'pages/add_snippet.html', context)
+    if request.method == "GET":
+        form = SnippetForm()
+        context = {
+            'pagename': 'Добавление нового сниппета',
+            'form': form
+        }
+        return render(request, 'pages/add_snippet.html', context)
+    elif request.method == "POST":
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("snippets-list")
 
 
 def snippets_page(request):
@@ -30,16 +41,5 @@ def snippet_detail(request, snippet_id):
     }
     return render(request, 'pages/snippet_detail.html', context)
 
-
-def snippet_create(request):
-    if request.method == "POST":
-        form_data = request.POST
-        snippet = Snippet(
-            name=form_data["name"],
-            lang=form_data["lang"],
-            code=form_data["code"],
-        )
-        snippet.save()
-        return redirect('snippets-list')
 
 
