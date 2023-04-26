@@ -82,3 +82,23 @@ def registration(request):
             return render(request, 'pages/registration.html', context)
 
 
+def snippets_my(request):
+    my_snippets = Snippet.objects.filter(user=request.user)
+    context = {
+        'pagename': 'Мои сниппеты',
+        'snippets': my_snippets
+    }
+    return render(request, 'pages/view_snippets.html', context)
+
+
+def snippet_delete(request, snippet_id):
+    snippet = Snippet.objects.get(pk=snippet_id)
+    snippet.delete()
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def snippet_edit(request, snippet_id):
+    pass
+
+
+
