@@ -3,6 +3,7 @@
 {% block content %}
 
 <!-- Begin page content -->
+
     <main role="main" class="mt-3 flex-shrink-0">
         <div class="container">
             <div class="row">
@@ -14,8 +15,8 @@
 
             <div class="row">
                 <div class="col">
-                    <p>На данной страницы будут отображаться все созданные сниппеты.</p>
-                    <p>Пока тут просто пример, но скоро заменим реальными сниппетами из БД!</p>
+                    <p>Все сниппеты.</p>
+
                     <hr>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                         </tbody>
                     </table>
                     <div align="right">
-                        <i style="color: gray;">Всего сниппетов:{{snippets.len}}</i>
+                        <i style="color: gray;">Всего сниппетов: {{quantity}}</i>
                     </div>
                 </div>
             </div>
