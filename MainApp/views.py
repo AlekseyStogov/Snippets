@@ -53,8 +53,10 @@ def login(request):
         if user is not None:
             auth.login(request, user)
         else:
-            # Return error message
-            pass
+            context = {
+                "errors": ["Логин или пароль некорректны"]
+            }
+            return render(request, 'pages/index.html',context)
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
