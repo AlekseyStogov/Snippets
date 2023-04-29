@@ -96,9 +96,9 @@ def snippets_my(request):
 
 
 def snippets_quantity(request):
-
+    snippets_quantity = Snippet.objects.count()
     context = {
-        'quantity': 'snippets_quantity',
+        'quantity': snippets_quantity,
     }
     return render(request, 'pages/view_snippets.html', context)
 
@@ -123,4 +123,5 @@ def comment_add(request):
            comment.snippet = Snippet.objects.get(pk=snippet_id)
            comment.save()
            return redirect(request.META.get('HTTP_REFERER', '/'))
+       raise Http404
 
