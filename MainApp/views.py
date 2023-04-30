@@ -1,9 +1,10 @@
-from django.db.models import Sum
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.contrib import auth
+
 
 
 def index_page(request):
@@ -33,6 +34,11 @@ def snippets_page(request):
     snippets = Snippet.objects.all()
     snippets_quantity = Snippet.objects.all().count()
     context = {'pagename': 'Просмотр сниппетов', 'snippets_quantity': snippets_quantity}
+    if not request.user.is_authenticated:
+        snippets = snippets.filter(private=False)
+    else:
+        snippets = Snippet.objects.filter(Q(private=False) | Q(user=request.user))
+
     if request.GET.get("lang"):
         snippets = snippets.filter(lang=request.GET['lang'])
         context['lang'] = request.GET['lang']

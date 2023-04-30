@@ -15,6 +15,7 @@ class Snippet(models.Model):
     name = models.CharField(max_length=100)
     lang = models.CharField(max_length=30, choices=LANG_CHOICES)
     code = models.TextField(max_length=5000)
+    private = models.BooleanField(default=False)  # public
     creation_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE,
                              blank=True, null=True)
