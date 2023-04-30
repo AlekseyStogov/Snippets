@@ -13,6 +13,7 @@ def index_page(request):
 
 def add_snippet_page(request):
     if request.method == "GET":
+
         form = SnippetForm()
         context = {
             'pagename': 'Добавление нового сниппета',
@@ -30,20 +31,31 @@ def add_snippet_page(request):
 
 def snippets_page(request):
     snippets = Snippet.objects.all()
+    snippets_quantity = Snippet.objects.all().count()
+    context = {'pagename': 'Просмотр сниппетов', 'snippets_quantity': snippets_quantity}
+    if request.GET.get("lang"):
+        snippets = snippets.filter(lang=request.GET['lang'])
+        context['lang'] = request.GET['lang']
+        snippets_quantity = snippets.count()
+
+
     context = {
-        'pagename': 'Просмотр сниппетов',
-        'snippets': snippets
+        'snippets': snippets,
+        'snippets_quantity': snippets_quantity,
+
     }
     return render(request, 'pages/view_snippets.html', context)
 
 
 def snippet_detail(request, snippet_id):
+
     snippet = Snippet.objects.get(pk=snippet_id)
     comment_form = CommentForm()
     context = {
         'pagename': 'Информация о сниппете',
         'snippet': snippet,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+
     }
     return render(request, 'pages/snippet_detail.html', context)
 
@@ -90,7 +102,7 @@ def registration(request):
 
 def snippets_my(request):
     my_snippets = Snippet.objects.filter(user=request.user)
-    snippets_quantity = Snippet.objects.all().count()
+    snippets_quantity = Snippet.objects.filter(user=request.user).count()
     context = {
         'pagename': 'Мои сниппеты',
         'snippets': my_snippets,

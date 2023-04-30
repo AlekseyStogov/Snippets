@@ -24,12 +24,26 @@
 
             <div class="row">
                 <div class="col">
+                    <form action="" method="get">
+                        <select name="lang" id="">
+                            <option value="js" {% if lang == "js" %}selected{% endif %}>JavaScript</option>
+                            <option value="python" {% if lang == "python" %}selected{% endif %}>Python</option>
+                            <option value="cpp" {% if lang == "cpp" %}selected{% endif %}>C++</option>
+                        </select>
+                        <button type="submit">ok</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
                     <table class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Название</th>
                             <th scope="col">Дата создания</th>
+                            <th scope="col">Язык</th>
                             <th scope="col">Автор</th>
                         </tr>
                         </thead>
@@ -47,6 +61,7 @@
                                 </a>
                             </td>
                             <td>{{snippet.creation_date}}</td>
+                            <td>{{snippet.lang}}</td>
                             <td>{{snippet.user |default:"Отсутствует"}}</td>
                         </tr>
                         {% endfor %}
@@ -55,7 +70,7 @@
                         </tbody>
                     </table>
                     <div align="right">
-                        <i style="color: gray;">Всего сниппетов: {{snippets_quantity}}</i>
+                        <i style="color: gray;"> Всего сниппетов: {{snippets_quantity}}</i>
                     </div>
                 </div>
             </div>
