@@ -1,8 +1,10 @@
+from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.contrib import auth
+
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -88,20 +90,13 @@ def registration(request):
 
 def snippets_my(request):
     my_snippets = Snippet.objects.filter(user=request.user)
+    snippets_quantity = Snippet.objects.all().count()
     context = {
         'pagename': 'Мои сниппеты',
-        'snippets': my_snippets
+        'snippets': my_snippets,
+        'snippets_quantity': snippets_quantity
     }
     return render(request, 'pages/view_snippets.html', context)
-
-
-def snippets_quantity(request):
-    snippets_quantity = Snippet.objects.count()
-    context = {
-        'quantity': snippets_quantity,
-    }
-    return render(request, 'pages/view_snippets.html', context)
-
 
 
 def snippet_delete(request, snippet_id):

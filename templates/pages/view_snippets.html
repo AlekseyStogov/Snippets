@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -46,7 +47,7 @@
                                 </a>
                             </td>
                             <td>{{snippet.creation_date}}</td>
-                            <td>{{snippet.user | default:"нет"}}</td>
+                            <td>{{snippet.user |default:"Отсутствует"}}</td>
                         </tr>
                         {% endfor %}
 
@@ -54,7 +55,7 @@
                         </tbody>
                     </table>
                     <div align="right">
-                        <i style="color: gray;">Всего сниппетов: {{quantity}}</i>
+                        <i style="color: gray;">Всего сниппетов: {{snippets_quantity}}</i>
                     </div>
                 </div>
             </div>
