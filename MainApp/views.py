@@ -34,6 +34,7 @@ def snippets_page(request):
     snippets = Snippet.objects.all()
     snippets_quantity = Snippet.objects.all().count()
     context = {'pagename': 'Просмотр сниппетов', 'snippets_quantity': snippets_quantity}
+    #print(f"sort-data={request.GET.get('sort')}")
     if not request.user.is_authenticated:
         snippets = snippets.filter(private=False)
     else:
@@ -44,7 +45,8 @@ def snippets_page(request):
         context['lang'] = request.GET['lang']
         snippets_quantity = snippets.count()
 
-
+    if request.GET.get("sort"):
+        snippets = snippets.order_by(request.GET.get("sort"))
     context = {
         'snippets': snippets,
         'snippets_quantity': snippets_quantity,
@@ -137,4 +139,3 @@ def comment_add(request):
            comment.save()
            return redirect(request.META.get('HTTP_REFERER', '/'))
        raise Http404
-
