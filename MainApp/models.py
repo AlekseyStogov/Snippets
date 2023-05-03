@@ -19,6 +19,8 @@ class Snippet(models.Model):
     creation_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE,
                              blank=True, null=True)
+    def __str__(self):
+        return f"Snippet: {self.name} lang: {self.lang} author: {self.user}"
 
 
 class Comment(models.Model):
