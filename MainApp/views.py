@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.db.models import Count
 
 
 
@@ -31,10 +33,11 @@ def add_snippet_page(request):
 
 
 def snippets_page(request):
+    #print(f"user_id = {request.GET.get('user_id')}")
     snippets = Snippet.objects.all()
     snippets_quantity = Snippet.objects.all().count()
     context = {'pagename': 'Просмотр сниппетов', 'snippets_quantity': snippets_quantity}
-    #print(f"sort-data={request.GET.get('sort')}")
+    # print(f"user_id={request.GET.get('user_id')}")
     if not request.user.is_authenticated:
         snippets = snippets.filter(private=False)
     else:
@@ -47,11 +50,16 @@ def snippets_page(request):
 
     if request.GET.get("sort"):
         snippets = snippets.order_by(request.GET.get("sort"))
+
+    if request.GET.get("user_id"):
+        snippets = snippets.filter(user__id=request.GET['user_id'])
+
     context = {
         'snippets': snippets,
         'snippets_quantity': snippets_quantity,
-
     }
+    users = User.objects.all().annotate(num_snippets=Count('snippet')).filter(num_snippets__gte=1)
+    context['users'] = users
     return render(request, 'pages/view_snippets.html', context)
 
 
