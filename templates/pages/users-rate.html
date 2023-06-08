@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">username</th>
+                        <th scope="col">Всего сниппетов</th>
+                        <th scope="col">Комментариев под сниппетами</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                            <td scope="row">{{ user.id }}</td>
+                            <td scope="row">{{ user.username }}</td>
+                            <td scope="row">{{ user.num_snippets }}</td>
+                            <td scope="row">{{ user.num_comments }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

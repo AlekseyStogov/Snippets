@@ -17,6 +17,6 @@ urlpatterns = [
     path('snippets/delete/<int:snippet_id>', views.snippet_delete,name='snippet-delete'),
     path('snippets/edit/<int:snippet_id>', views.snippet_edit,name='snippet-edit'),
     path('admin/', admin.site.urls),
-
+    path('users/rate', views.users_rate, name='users-rate'),
     path('comment/add', views.comment_add, name="comment_add"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

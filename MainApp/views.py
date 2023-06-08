@@ -58,7 +58,7 @@ def snippets_page(request):
         'snippets': snippets,
         'snippets_quantity': snippets_quantity,
     }
-    users = User.objects.all().annotate(num_snippets=Count('snippet')).filter(num_snippets__gte=1)
+    users = User.objects.all().annotate(num_snippets=Count('snippets ')).filter(num_snippets__gte=1)
     context['users'] = users
     return render(request, 'pages/view_snippets.html', context)
 
@@ -147,3 +147,10 @@ def comment_add(request):
            comment.save()
            return redirect(request.META.get('HTTP_REFERER', '/'))
        raise Http404
+
+def users_rate(request):
+    users = User.objects.all()\
+        .annotate(num_snippets=Count('snippets'))\
+        .annotate(num_comments=Count('snippets__comments'))
+
+    return render(request, 'pages/users-rate.html', {"users": users})

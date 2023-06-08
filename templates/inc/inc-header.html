@@ -28,7 +28,13 @@
                             Мои сниппеты
                         </a>
                     </li>
+
                     {% endif %}
+                    <li class="form-inline">
+                        <a class="btn btn-outline-secondary" href="{% url 'users-rate' %}">
+                            Рейтинги пользователей
+                        </a>
+                    </li>
                 </ul>
             </div>
             {% if request.user.is_authenticated %}
